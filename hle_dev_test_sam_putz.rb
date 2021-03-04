@@ -17,10 +17,11 @@ def hle_dev_test_sam(client)
 	  	update = "UPDATE hle_dev_test_sam_putz SET clean_name = \"#{clean_name}\", sentence = \"#{sentence}\" WHERE id = '#{id}';" 
 	  	client.query(update) unless "#{name["candidate_office_name"]}" == "none given"
 	  end
-	delete = "DELETE FROM hle_dev_test_sam_putz WHERE clean_name is null or clean_name = '' or clean_name = 'unknown';"
-	client.query(delete)
-	puts "Task complete."
+	puts "Fields filled."
   end
+  delete = "DELETE FROM hle_dev_test_sam_putz WHERE clean_name is null or clean_name = '' or clean_name = 'unknown' or candidate_office_name = 'N/A';"
+  client.query(delete)
+  puts "Data cleaned."
 end
 
 client = Mysql2::Client.new(host: "db09.blockshopper.com", username: 'loki', password: 'v4WmZip2K67J6Iq7NXC')
