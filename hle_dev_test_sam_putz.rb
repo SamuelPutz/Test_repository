@@ -12,6 +12,28 @@ def hle_dev_test_sam(client)
   	puts "Inserting new names and sentences..."
 	  new_names.map do |name|
 	  	id = "#{name["id"]}"
+	        # clean_name = name["candidate_office_name"].gsub(/[^\/,]+(?=\/)/, &:downcase)
+		# .gsub(/([^\/,]+), ([^\/]+)(\/|$)/, '\1 (\2)')
+		# .match(/([^\/]+)\/([^\/]+)(\/([^\/]+))?/)
+		# { |match| match.captures.compact.count==4 ? "#{match.captures[3]} #{match.captures[1]} and #{match.captures[0]}" : "#{match.captures[1]} #{match.captures[0]}" }
+		# .gsub(/Dist\b/, "District")
+		# .gsub(/\bRep\b/, "Representative")
+		# .gsub(/\b(T)wp(\.?|\b)/i, '\1ownship')
+		# .gsub(/(.+\w)(Township)/, '\1 \2')
+		# .gsub(/\b(H)wy\b/i, '\1ighway')
+		# .gsub(/  /, ' ')
+		# .gsub(/\b(\w+)\s\1\b/i, '\1')
+		# .gsub(/\b(\w+\b\s\b\w+\b)\s\b\1/i, '\1')
+		# .gsub(/(\w\w\w+)(\.)/, '\1')
+		# .gsub(/\//, "")
+		# .gsub(/(\bschool) (district ?\d+) (.+)/, '\2 \1 \3')
+		# .gsub(/Attorneys? Attorneys?/i, "attorney")
+		# .gsub(/(.+)(district) (\d+) \3/i, "\1\2 \3")
+		# .gsub(/(\b\w+\b) (\b\w+\b) (\1)/i, '\2 \3')
+		# .gsub(/(\b\w+\b) \1/i, '\1')
+		# .gsub(/  /, ' ')
+		# .gsub(/(District)(\d+)/, '\1 \2')
+		# .gsub(/\bCty\b/, 'County').strip
 	  	clean_name = "#{name["candidate_office_name"].gsub(/^((?![\/,]).)*$/){|s| s.downcase}.gsub(/Dist\b/, "District").gsub(/ Rep\b/, " Representative").gsub(/, (.+)(?=\/)/, ' (\1)').gsub(/.+\//){|s| s.downcase }.gsub(/Twp.?\b/, "Township").gsub(/\btwp\b/, "township").gsub(/(.+\w)(Township)/, '\1 \2').gsub(/\bHwy\b/, "Highway").gsub(/\bhwy\b/, "highway").gsub(/(.+)\/(.+)\/(.+)/, '\3 \1 and \2').gsub(/, (.+)/, ' (\1)').gsub(/(.+)\/(.+)/, '\2 \1').gsub(/  /, ' ').gsub(/\b(\w+)\s\1\b/i, '\1').gsub(/\b(\w+\b\s\b\w+\b)\s\b\1/i, '\1').gsub(/(\w\w\w+)(\.)/, '\1').strip.gsub(/\//, "").gsub(/(\bschool) (district ?\d+) (.+)/, '\2 \1 \3').gsub(/Attorneys? Attorneys?/i, "attorney").gsub(/  /, ' ').split("(").map{|s| if s.chars.include?(")"); s.split(" ").map(&:capitalize).join(" "); else; s; end}.join("(").gsub(/(.+)(district) (\d+) \3/i, "\1\2 \3").gsub(/(\b\w+\b) (\b\w+\b) (\1)/i, '\2 \3').gsub(/(\b\w+\b) \1/i, '\1').gsub(/  /, ' ').gsub(/(District)(\d+)/, '\1 \2').gsub(/\bCty\b/, 'County')}"
 	  	sentence = "The candidate is running for the #{clean_name} office."
 	  	update = "UPDATE hle_dev_test_sam_putz SET clean_name = \"#{clean_name}\", sentence = \"#{sentence}\" WHERE id = '#{id}';" 
