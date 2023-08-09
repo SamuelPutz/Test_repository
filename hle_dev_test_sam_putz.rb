@@ -13,7 +13,7 @@ def hle_dev_test_sam(client)
 	  new_names.map do |name|
 	  	id = "#{name["id"]}"
 	        # clean_name = name["candidate_office_name"].gsub(/[^\/,]+(?=\/)/, &:downcase)
-		# .gsub(/([^\/,]+), ([^\/]+)(\/|$)/, '\1 (\2)')
+		# .gsub(/,\s*([^\/,]+(?=(\/|$)))/, ' (\1)')
 		# .match(/([^\/]+)\/([^\/]+)(\/([^\/]+))?/)
 		# { |match| match.captures.compact.count==4 ? "#{match.captures[3]} #{match.captures[1]} and #{match.captures[0]}" : "#{match.captures[1]} #{match.captures[0]}" }
 		# .gsub(/Dist\b/, "District")
